@@ -34,11 +34,12 @@ public class Triangularization {
 
 
         ArrayList<Integer> orderOfTasks = new ArrayList<Integer>();
+        ArrayList<Integer> remainingTasks = new ArrayList<Integer>();
+
         for(int i=0 ; i<tempMatrix.length ; i++){
             orderOfTasks.add(0);
+            remainingTasks.add(i+1);
         }
-
-        System.out.println("SIze of tempMatrix: " + Integer.toString(tempMatrix.length));
 
         int colsFound = 0;
         int rowsFound = 0;
@@ -59,7 +60,7 @@ public class Triangularization {
                     emptyRows.add(row);
 
                     if(!orderOfTasks.contains(row)){
-                        orderOfTasks.set(rowsFound, row+1);
+                        orderOfTasks.set(rowsFound, remainingTasks.get(row));
                         rowsFound++;
                     }
 
@@ -85,13 +86,19 @@ public class Triangularization {
                         emptyCols.add(col);
 
                         if(!orderOfTasks.contains(col)){
-                            orderOfTasks.set(matrix.length-colsFound-1,col+1);
+                            orderOfTasks.set(matrix.length-colsFound-1,remainingTasks.get(col));
                             colsFound++;
                         }
 
                     }
                 }
             //}
+/*
+            for(int task : orderOfTasks){
+                if(remainingTasks.contains(task)){
+                    remainingTasks.remove(task);
+                }
+            }*/
 
             System.out.print("Empty Rows:   ");
             for(int row : emptyRows){
