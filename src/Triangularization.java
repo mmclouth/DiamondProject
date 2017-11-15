@@ -50,7 +50,7 @@ public class Triangularization {
             for(int row=0 ; row<tempMatrix.length ; row++){
                 boolean emptyRow = true;
                 for (int col=0 ; col < tempMatrix[0].length ; col++){
-                    if(matrix[row][col] == 1 && row != col){
+                    if(tempMatrix[row][col] == 1 && row != col){
                         emptyRow = false;
                     }
                 }
@@ -76,7 +76,7 @@ public class Triangularization {
                     boolean emptyCol = true;
 
                     for (int row = 0; row < tempMatrix[0].length; row++) {
-                        if (matrix[row][col] == 1 && row != col) {
+                        if (tempMatrix[row][col] == 1 && row != col) {
                             emptyCol = false;
                         }
                     }
@@ -116,7 +116,47 @@ public class Triangularization {
                 System.out.print(" ");
             }
 
-            complete = true;
+            int newSize = this.matrix.length - (rowsFound + colsFound);
+
+            if(newSize == 0){
+                complete = true;
+            } else {
+
+                tempMatrix = new int[newSize][newSize];
+
+                int rowDiff = 0;
+
+                for (int row = 0; row < newSize; row++) {
+
+                    if (orderOfTasks.contains(row + 1)) {
+                        rowDiff++;
+                    }
+
+                    int colDiff = 0;
+
+                    for (int col = 0; col < newSize; col++) {
+
+                        if (orderOfTasks.contains(col + 1)) {
+                            colDiff++;
+                        }
+
+                        tempMatrix[row][col] = this.matrix[row + rowDiff][col + colDiff];
+
+                    }
+                }
+
+
+                System.out.println();
+                for (int row = 0; row < newSize; row++) {
+                    for (int col = 0; col < newSize; col++) {
+                        System.out.print(tempMatrix[row][col]);
+                        System.out.print(" ");
+                    }
+                    System.out.println();
+                }
+
+
+            }
         }
 
         return tempMatrix;
