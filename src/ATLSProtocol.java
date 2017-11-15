@@ -57,7 +57,23 @@ public class ATLSProtocol {
             } catch (IOException e) {
                 System.err.println(e.toString());
             }
+
         }
+
+        int[][] matrix =    {{1,0,0,0,0,0,1,0},
+                            {0,1,1,0,1,0,0,0},
+                            {0,0,1,1,0,0,0,0},
+                            {0,0,0,1,0,0,0,0},
+                            {0,0,0,1,1,0,1,0},
+                            {0,1,1,1,0,1,0,1},
+                            {0,0,0,0,0,0,1,0},
+                            {1,0,1,0,1,0,0,1}};
+
+        Triangularization triangle = new Triangularization(matrix);
+
+        triangle.performAlgorithm();
+
+
     }
 
 }

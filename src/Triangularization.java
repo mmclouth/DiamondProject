@@ -32,6 +32,17 @@ public class Triangularization {
         ArrayList<Integer> emptyRows = new ArrayList<Integer>();
         ArrayList<Integer> emptyCols = new ArrayList<Integer>();
 
+
+        ArrayList<Integer> orderOfTasks = new ArrayList<Integer>();
+        for(int i=0 ; i<tempMatrix.length ; i++){
+            orderOfTasks.add(0);
+        }
+
+        System.out.println("SIze of tempMatrix: " + Integer.toString(tempMatrix.length));
+
+        int colsFound = 0;
+        int rowsFound = 0;
+
         while(!complete){
 
             emptyRows = new ArrayList<Integer>();
@@ -44,13 +55,19 @@ public class Triangularization {
                     }
                 }
 
-                if(!emptyRow){
+                if(emptyRow){
                     emptyRows.add(row);
+
+                    if(!orderOfTasks.contains(row)){
+                        orderOfTasks.set(rowsFound, row+1);
+                        rowsFound++;
+                    }
+
                 }
 
             }
 
-            if(emptyRows.size() == 0){
+            //if(emptyRows.size() == 0){
 
                 emptyCols = new ArrayList<Integer>();
 
@@ -64,12 +81,42 @@ public class Triangularization {
                         }
                     }
 
-                    if (!emptyCol) {
+                    if (emptyCol) {
                         emptyCols.add(col);
+
+                        if(!orderOfTasks.contains(col)){
+                            orderOfTasks.set(matrix.length-colsFound-1,col+1);
+                            colsFound++;
+                        }
+
                     }
                 }
+            //}
+
+            System.out.print("Empty Rows:   ");
+            for(int row : emptyRows){
+                System.out.print(row+1);
+                System.out.print(" ");
+            }
+            System.out.println();
+            System.out.print("Empty Columns:   ");
+            for(int col : emptyCols){
+                System.out.print(col+1);
+                System.out.print(" ");
             }
 
+            System.out.println();
+            System.out.print("Order of Tasks:   ");
+            for(int task : orderOfTasks){
+                if(task == 0){
+                    System.out.print('-');
+                } else {
+                    System.out.print(task);
+                }
+                System.out.print(" ");
+            }
+
+            complete = true;
         }
 
         return tempMatrix;
