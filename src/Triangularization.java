@@ -101,7 +101,7 @@ public class Triangularization {
             }
 
 
-
+            /*
             System.out.print("Empty Rows:   ");
             for(int row : emptyRows){
                 System.out.print(row+1);
@@ -113,6 +113,7 @@ public class Triangularization {
                 System.out.print(col+1);
                 System.out.print(" ");
             }
+            */
 
             System.out.println();
             System.out.print("Order of Tasks:   ");
@@ -192,6 +193,34 @@ public class Triangularization {
             }
             System.out.print(" ");
         }
+
+        int newSize = this.matrix.length;
+        tempMatrix = new int[newSize][newSize];
+
+
+        for(int i=0 ; i<newSize ; i++){
+            tempMatrix[i]=this.matrix[orderOfTasks.get(i)-1];
+        }
+
+        //TODO: PRINTING NEW MATRIX
+        System.out.println();
+        System.out.print("  ");
+        //System.out.print("Remaining Tasks: ");
+        for(int i=0 ; i<newSize; i++){
+            System.out.print(orderOfTasks.get(i));
+            System.out.print(" ");
+        }
+        System.out.println();
+        for (int row = 0; row < newSize; row++) {
+            System.out.print(orderOfTasks.get(row));
+            System.out.print(" ");
+            for (int col = 0; col < newSize; col++) {
+                System.out.print(tempMatrix[row][col]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
 
         return tempMatrix;
 
