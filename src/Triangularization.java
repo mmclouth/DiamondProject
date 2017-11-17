@@ -215,7 +215,11 @@ public class Triangularization {
             System.out.print(orderOfTasks.get(row));
             System.out.print(" ");
             for (int col = 0; col < newSize; col++) {
-                System.out.print(tempMatrix[row][col]);
+                if(tempMatrix[row][col] == 0){
+                    System.out.print('-');
+                } else {
+                    System.out.print(tempMatrix[row][col]);
+                }
                 System.out.print(" ");
             }
             System.out.println();
