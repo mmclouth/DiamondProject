@@ -181,10 +181,9 @@ public class Triangularization {
             }
         }
 
+
         System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.print("FINAL Order of Tasks:   ");
+        System.out.print("FINAL Order of Tasks:  ");
         for(int task : orderOfTasks){
             if(task == 0){
                 System.out.print('-');
@@ -196,16 +195,24 @@ public class Triangularization {
 
         int newSize = this.matrix.length;
         tempMatrix = new int[newSize][newSize];
+        int[][] finalMatrix = new int[newSize][newSize];
 
 
         for(int i=0 ; i<newSize ; i++){
             tempMatrix[i]=this.matrix[orderOfTasks.get(i)-1];
         }
 
-        //TODO: PRINTING NEW MATRIX
+        for(int i=0 ; i<newSize ; i++){
+            for(int j=0 ; j<newSize ; j++) {
+                finalMatrix[i][j] = tempMatrix[i][orderOfTasks.get(j) - 1];
+            }
+        }
+
+
         System.out.println();
+        System.out.println();
+        System.out.println("Final Ordered Matrix: ");
         System.out.print("  ");
-        //System.out.print("Remaining Tasks: ");
         for(int i=0 ; i<newSize; i++){
             System.out.print(orderOfTasks.get(i));
             System.out.print(" ");
@@ -215,10 +222,10 @@ public class Triangularization {
             System.out.print(orderOfTasks.get(row));
             System.out.print(" ");
             for (int col = 0; col < newSize; col++) {
-                if(tempMatrix[row][col] == 0){
+                if(finalMatrix[row][col] == 0){
                     System.out.print('-');
                 } else {
-                    System.out.print(tempMatrix[row][col]);
+                    System.out.print(finalMatrix[row][col]);
                 }
                 System.out.print(" ");
             }
