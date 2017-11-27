@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kenziemclouth on 11/14/17.
@@ -234,6 +235,49 @@ public class Triangularization {
 
 
         return tempMatrix;
+
+    }
+
+    private void initializeTaskMatrix(){
+
+        String[] taskNames = {"maintain airway",
+                                "give oxygen",
+                                "get ECG",
+                                "establish IV access",
+                                "get cardiac consult",
+                                "give fluid bolus",
+                                "Intubation",
+                                "assess breath sounds",
+                                "assess jugular venous distention",
+                                "direct manual pressure",
+                                "assess tissue perfusion",
+                                "give blood",
+                                "assess for hidden source of bleeding",
+                                "CPR",
+                                "maintain hemodynamic stability",
+                                "assess signs of increased ICP",
+                                "elevate HOB",
+                                "get neuro consult"};
+
+        int[][] matrix =
+                {       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0},
+                        {0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+                        {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+                        {0,0,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0},
+                        {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+                        {1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0},
+                        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},};
 
     }
 }
