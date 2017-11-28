@@ -35,6 +35,7 @@ public class Decomposition {
         taskNames.add("IV");
         taskNames.add("CPR");
         taskNames.add("fluid");
+        taskNames.add("cardiac");
 
         decomp.printMatrix(decomp.getMatrix());
         decomp.selectTasks(taskNames);
@@ -94,7 +95,7 @@ public class Decomposition {
 
         //TODO: rearrange matrix for precedence
         int[][] holdMatrix =
-                {       {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+                {       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         {1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
                         {1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
                         {1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
@@ -107,7 +108,7 @@ public class Decomposition {
                         {1,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0},
                         {1,0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0},
                         {1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0},
-                        {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
                         {1,0,1,1,0,0,0,0,0,0,0,1,0,1,1,0,0,0},
                         {1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0},
                         {1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0},
@@ -135,6 +136,10 @@ public class Decomposition {
 
 
     public void printMatrix(HashMap<String,HashMap<String, Integer>> tempMatrix){
+
+        System.out.println();
+        System.out.println();
+
         System.out.printf("%10s",  "    ");
         for(String task: tempMatrix.keySet()){
             System.out.printf("%10s", task);
@@ -184,6 +189,37 @@ public class Decomposition {
 
     }
 
+    public HashMap<String, HashMap<String, Integer>> removeTasks(ArrayList<String> taskNames){
+
+        HashMap<String, HashMap<String, Integer>> tempMatrix = (HashMap<String, HashMap<String, Integer>>) matrix.clone();
+
+        HashMap<String, HashMap<String, Integer>> tempMatrix2 = new HashMap<>();
+        HashMap<String, Integer> tempRow;
+
+
+        //Remove rows of tasks
+        for(String key : tempMatrix.keySet()){
+
+            if(!taskNames.contains(key)){
+
+                tempRow = new HashMap<>();
+
+                //Remove columns of tasks
+                for(String key2 : tempMatrix.get(key).keySet()){
+
+                    if(!taskNames.contains(key2)){
+                        tempRow.put(key2, tempMatrix.get(key).get(key2));
+                    }
+
+                }
+                tempMatrix2.put(key, tempRow);
+            }
+        }
+
+        return tempMatrix2;
+
+    }
+
 
 
 
@@ -216,25 +252,55 @@ public class Decomposition {
 
 
         String[] orderedTasks = new String[numOfTasks];
+        boolean complete = false;
 
-        ArrayList<String> emptyRows = determineEmptyRows(tempMatrix);
-        ArrayList<String> emptyCols = determineEmptyColumns(tempMatrix);
+        while(!complete) {
 
-        System.out.println(emptyRows);
-        System.out.println(emptyCols);
 
-        for(String task : emptyRows){
-            orderedTasks[rowsFound] =  task;
-            rowsFound++;
+            ArrayList<String> emptyRows = determineEmptyRows(tempMatrix);
+            ArrayList<String> emptyCols = determineEmptyColumns(tempMatrix);
+
+            System.out.println(emptyRows);
+            System.out.println(emptyCols);
+
+            for (String task : emptyRows) {
+                orderedTasks[rowsFound] = task;
+                rowsFound++;
+            }
+
+            for (String task : emptyCols) {
+                orderedTasks[numOfTasks - colsFound - 1] = task;
+                colsFound++;
+            }
+
+
+            ArrayList<String> tasksAsList = new ArrayList(Arrays.asList(orderedTasks));
+            System.out.println(tasksAsList);
+
+            tempMatrix = removeTasks(tasksAsList);
+            printMatrix(tempMatrix);
+
+            //if there is one or no tasks left to be sorted, sort the last task and then end the algorithm
+            if(tempMatrix.size() < 2){
+
+                //if one more task, get task name and place it in remaining ordered slot
+                if(tempMatrix.size() == 1){
+                    Map.Entry<String, HashMap<String, Integer>> mapEntry = tempMatrix.entrySet().iterator().next();
+                    String lastKey = mapEntry.getKey();
+                    orderedTasks[rowsFound] = lastKey;
+                }
+
+                complete = true;
+            }
+
+
         }
 
-        for(String task : emptyCols){
-            orderedTasks[numOfTasks - colsFound - 1] =  task;
-            colsFound++;
-        }
 
-        System.out.println(Arrays.asList(orderedTasks));
-
+        System.out.println("PRINTING FINAL MATRIX");
+        printMatrix(tempMatrix);
+        ArrayList<String> tasksAsList = new ArrayList(Arrays.asList(orderedTasks));
+        System.out.println(tasksAsList);
     }
 
 
@@ -272,7 +338,7 @@ public class Decomposition {
 
         ArrayList<String> emptyCols = new ArrayList<>();
 
-        //get first key of linkedhashmap
+        //get first key of hashmap
         Map.Entry<String, HashMap<String, Integer>> mapEntry = tempMatrix.entrySet().iterator().next();
 
         for (String key2 : tempMatrix.get(mapEntry.getKey()).keySet()) {
