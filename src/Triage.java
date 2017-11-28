@@ -12,26 +12,26 @@ public class Triage {
 
         Scanner input = new Scanner(System.in);
 
-        boolean bleeding = false;
-        boolean airway = false;
-        boolean maintainAirway = false;
-        boolean giveOxygen = false;
-        boolean ECG = false;
-        boolean IVaccess = false;
-        boolean cardiacConsult = false;
-        boolean fluidBolus = false;
-        boolean intubation = false;
-        boolean breathSounds = false;
-        boolean assessJugular = false;
-        boolean manualPressure = false;
-        boolean assessTissue = false;
-        boolean giveBlood = false;
-        boolean assesHiddenBleeding = false;
-        boolean CPR = false;
-        boolean hemodynamicStability = false;
-        boolean assesICP = false;
-        boolean elevateHOB = false;
-        boolean neuroConsult = false;
+        int bleeding = 0;
+        int airway = 0;
+        int maintainAirway = 0;
+        int giveOxygen = 0;
+        int ECG = 0;
+        int IVaccess = 0;
+        int cardiacConsult = 0;
+        int fluidBolus = 0;
+        int intubation = 0;
+        int breathSounds = 0;
+        int assessJugular = 0;
+        int manualPressure = 0;
+        int assessTissue = 0;
+        int giveBlood = 0;
+        int assesHiddenBleeding = 0;
+        int CPR = 0;
+        int hemodynamicStability = 0;
+        int assesICP = 0;
+        int elevateHOB = 0;
+        int neuroConsult = 0;
 
 
 
@@ -45,18 +45,18 @@ public class Triage {
         if(heartRate == 0){
 
             System.out.println("Perform CPR");
-            CPR = true;
+            CPR = 1;
         }
 
         else {
 
             if (heartRate > 100 || heartRate < 60) {
                 System.out.println("Perform necessary tasks");
-                maintainAirway = true;
-                giveOxygen = true;
-                ECG = true;
-                IVaccess = true;
-                cardiacConsult = true;
+                maintainAirway = 1;
+                giveOxygen = 1;
+                ECG = 1;
+                IVaccess = 1;
+                cardiacConsult = 1;
 
             } else {
                 System.out.println("healthy");
@@ -72,9 +72,9 @@ public class Triage {
 
         if(bloodPressure < 90){
             System.out.println("Perform Necessary Tasks");
-            maintainAirway = true;
-            IVaccess = true;
-            fluidBolus = true;
+            maintainAirway = 1;
+            IVaccess = 1;
+            fluidBolus = 1;
 
         } else {
             System.out.println("healthy");
@@ -85,8 +85,9 @@ public class Triage {
         String response = input.next();
 
         if(response.equals("yes")){
-            airway = true;
-            intubation = true;
+            System.out.println("Perform Intubation");
+            airway = 1;
+            intubation = 1;
         }
 
         int respRate;
@@ -97,11 +98,11 @@ public class Triage {
         System.out.println("Respiratory rate is "+ respRate);
 
         if(respRate < 10 || respRate > 29){
-            System.out.println("Perform Necesary Tasks");
-            maintainAirway = true;
-            giveOxygen = true;
-            breathSounds = true;
-            assessJugular = true;
+            System.out.println("Perform Necessary Tasks");
+            maintainAirway = 1;
+            giveOxygen = 1;
+            breathSounds = 1;
+            assessJugular = 1;
         } else {
             System.out.println("healthy");
         }
@@ -110,14 +111,15 @@ public class Triage {
         String response2 = input.next();
 
         if(response2.equals("yes")){
-            bleeding = true;
-            maintainAirway = true;
-            manualPressure = true;
-            assessTissue = true;
-            IVaccess = true;
-            fluidBolus = true;
-            giveBlood = true;
-            assesHiddenBleeding = true;
+            System.out.println("Perform Necessary Tasks");
+            bleeding = 1;
+            maintainAirway = 1;
+            manualPressure = 1;
+            assessTissue = 1;
+            IVaccess = 1;
+            fluidBolus = 1;
+            giveBlood = 1;
+            assesHiddenBleeding = 1;
         }
 
         int glascow;
@@ -128,12 +130,12 @@ public class Triage {
         System.out.println("Glascow coma is "+ glascow);
 
         if(glascow < 9){
-            System.out.println("Perform Necesary Tasks");
-            maintainAirway = true;
-            hemodynamicStability = true;
-            assesICP = true;
-            elevateHOB = true;
-            neuroConsult = true;
+            System.out.println("Perform Necessary Tasks");
+            maintainAirway = 1;
+            hemodynamicStability = 1;
+            assesICP = 1;
+            elevateHOB = 1;
+            neuroConsult = 1;
 
         } else {
             System.out.println("healthy");
