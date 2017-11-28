@@ -84,7 +84,7 @@ public class ATLSProtocol {
         //triangle.performAlgorithm();
 
         triangle = new Triangularization();
-        triangle.performAlgorithm();
+        triangle.performAlgorithm2();
 
 
     }

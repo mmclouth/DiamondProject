@@ -141,6 +141,36 @@ public class Triage {
             System.out.println("healthy");
         }
 
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+
+        ArrayList<Integer> tasksNeeded = new ArrayList<>();
+
+        tasksNeeded.add(0,maintainAirway);
+        tasksNeeded.add(1,giveOxygen);
+        tasksNeeded.add(2,ECG);
+        tasksNeeded.add(3,IVaccess);
+        tasksNeeded.add(4,cardiacConsult);
+        tasksNeeded.add(5,fluidBolus);
+        tasksNeeded.add(6,intubation);
+        tasksNeeded.add(7,breathSounds);
+        tasksNeeded.add(8,assessJugular);
+        tasksNeeded.add(9,manualPressure);
+        tasksNeeded.add(10,assessTissue);
+        tasksNeeded.add(11,giveBlood);
+        tasksNeeded.add(12,assesHiddenBleeding);
+        tasksNeeded.add(13,CPR);
+        tasksNeeded.add(14,hemodynamicStability);
+        tasksNeeded.add(15,assesICP);
+        tasksNeeded.add(16,elevateHOB);
+        tasksNeeded.add(17,neuroConsult);
+
+        Triangularization triangle = new Triangularization();
+        triangle.selectTasks(tasksNeeded);
+        triangle.performAlgorithm2();
 
     }
 
