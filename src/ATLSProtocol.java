@@ -69,8 +69,21 @@ public class ATLSProtocol {
                             {0,0,0,0,0,0,1,0},
                             {1,0,1,0,1,0,0,1}};
 
-        Triangularization triangle = new Triangularization(matrix);
+        String[] nameMatrix =
+                {"Task 1",
+                "Task 2",
+                "Task 3",
+                "Task 4",
+                "Task 5",
+                "Task 6",
+                "Task 7",
+                "Task 8"};
 
+        Triangularization triangle = new Triangularization(matrix, nameMatrix);
+
+        //triangle.performAlgorithm();
+
+        triangle = new Triangularization();
         triangle.performAlgorithm();
 
 
