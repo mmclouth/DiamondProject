@@ -198,7 +198,34 @@ public class Patient {
 
     }
 
-    public Patient(){};
+    private HashMap<String, String> taskCodes;
+
+
+    public Patient(){
+
+        taskCodes = new HashMap<String,String>();
+
+        taskCodes.put("airway",   "Maintain airway");
+        taskCodes.put("oxygen",   "Give Oxygen");
+        taskCodes.put("ECG",      "Get ECG");
+        taskCodes.put("IV",       "Establish IV Access");
+        taskCodes.put("cardiac",  "Get a cardiac consult");
+        taskCodes.put("fluidbolis","Give fluid bolis");
+        taskCodes.put("intubate", "Lift the chin, provide suction, and intubate");
+        taskCodes.put("breath",   "Assess breath sounds");
+        taskCodes.put("jugular",  "Assess jugular venous distention");
+        taskCodes.put("pressure", "Apply manual pressure");
+        taskCodes.put("tissue",   "Assess tissue perfusion");
+        taskCodes.put("blood",    "Give blood");
+        taskCodes.put("bleeding", "Assess for hidden source of bleeding");
+        taskCodes.put("CPR",      "Perform CPR");
+        taskCodes.put("hemo",     "Maintain hemodynamic stability");
+        taskCodes.put("ICP",      "Assess signs of increased ICP");
+        taskCodes.put("HOB",      "Elevate head of bed");
+        taskCodes.put("neuro",    "Get a neuro consult");
+
+
+    };
 
     public ArrayList<String> triage(int heartRate, int bloodPressure, int respRate, int glascow,  String response, String response2){
 
@@ -325,6 +352,10 @@ public class Patient {
         Decomposition decomp = new Decomposition();
         decomp.selectTasks(tasksNeededMap);
         ArrayList<String> orderedTasks = decomp.performAlgorithm();
+
+        for(int i=0 ; i<orderedTasks.size() ; i++){
+            orderedTasks.set(i, this.taskCodes.get(orderedTasks.get(i)));
+        }
 
         return orderedTasks;
     }

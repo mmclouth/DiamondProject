@@ -13,6 +13,7 @@ public class TriageFrame extends JFrame implements ActionListener {
     private Container container;
     private JButton enterButton;
     private JButton startButton;
+    private JButton newButton;
     private JPanel startPanel;
     private JPanel inputPanel;
     private JPanel outputPanel;
@@ -29,7 +30,7 @@ public class TriageFrame extends JFrame implements ActionListener {
 
     public TriageFrame(){
 
-        super("Triage Window");
+        super("Triage");
         container = getContentPane();
 
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -42,7 +43,7 @@ public class TriageFrame extends JFrame implements ActionListener {
         startPanel = new JPanel();
 
         //set gridLayout1 instance variabe to a new Gridlayout object
-        gridLayout1 = new GridLayout(1,3,2,2);
+        gridLayout1 = new GridLayout(2,1,2,2);
         startPanel.setLayout(gridLayout1);
 
         JLabel clickToStart = new JLabel("Click to Start Program ");
@@ -117,8 +118,8 @@ public class TriageFrame extends JFrame implements ActionListener {
         inputPanel.add(enterButton);
 
         constr.fill = GridBagConstraints.HORIZONTAL;
-        constr.gridx = 0;
-        constr.gridy = 0;
+        constr.gridx = 2;
+        constr.gridy = 3;
 
         inputPanel.setSize(400, 100);
         inputPanel.setVisible(false);
@@ -130,8 +131,9 @@ public class TriageFrame extends JFrame implements ActionListener {
         //Start formatting for output panel
         outputPanel = new JPanel();
 
-        gridLayout1 = new GridLayout(19,2,2,2);
-        outputPanel.setLayout(gridLayout1);
+        gridLayout1 = new GridLayout(19,3,2,2);
+        GridBagLayout gridbaglayouttest = new GridBagLayout();
+        outputPanel.setLayout(gridbaglayouttest);
 
         for(int i=0 ; i<18 ; i++){
             taskNameLabels.add(new JLabel(""));
@@ -158,16 +160,34 @@ public class TriageFrame extends JFrame implements ActionListener {
 
 
         for(int i=0 ; i<18 ; i++){
-            outputPanel.add(taskLabels.get(i));
-            outputPanel.add(taskNameLabels.get(i));
+
+            constr.fill = GridBagConstraints.NORTHWEST;
+            constr.gridx = 0;
+            constr.gridy = i;
+
+            outputPanel.add(taskLabels.get(i), constr);
+
+            constr.gridx = 1;
+
+            outputPanel.add(taskNameLabels.get(i), constr);
         }
 
-        constr.fill = GridBagConstraints.HORIZONTAL;
+
+        newButton = new JButton("New Patient");
+        newButton.addActionListener(this);
+        outputPanel.add(newButton);
+
+
+        constr.fill = GridBagConstraints.VERTICAL;
         constr.gridx = 0;
         constr.gridy = 0;
+        constr.anchor = GridBagConstraints.NORTHWEST;
 
-        outputPanel.setSize(400, 100);
+        outputPanel.setPreferredSize(outputPanel.getPreferredSize());
+        outputPanel.setSize(outputPanel.preferredSize());
         outputPanel.setVisible(false);
+
+
         container.add(outputPanel, constr);
 
     }
@@ -206,11 +226,23 @@ public class TriageFrame extends JFrame implements ActionListener {
 
             }
 
+            container.setPreferredSize(container.getPreferredSize());
+            container.setSize(container.getPreferredSize());
             inputPanel.setVisible(false);
             outputPanel.setVisible(true);
 
+        } else if(e.getSource().equals(newButton)){
 
+            hbField.setText("");
+            bpField.setText("");
+            airwayField.setText("");
+            rrField.setText("");
+            glascowField.setText("");
+            bleedingField.setText("");
 
+            startPanel.setVisible(false);
+            outputPanel.setVisible(false);
+            inputPanel.setVisible(true);
 
         }
     }
