@@ -45,9 +45,6 @@ public class Decomposition {
 
 
 
-
-
-
     private void initializeMatrix(){
 
         /*
@@ -71,7 +68,7 @@ public class Decomposition {
                 "get neuro consult"};*/
 
 
-        String[] taskNames = {
+        /*String[] taskNames = {
                 "airway",
                 "oxygen",
                 "ECG",
@@ -90,10 +87,32 @@ public class Decomposition {
                 "ICP",
                 "HOB",
                 "neuro"};
+                */
+
+        String[] taskNames = {
+                "airway",
+                "CPR",
+                "oxygen",
+                "ECG",
+                "intubate",
+                "IV",
+                "blood",
+                "breath",
+                "jugular",
+                "pressure",
+                "bleeding",
+                "fluidbolis",
+                "hemo",
+                "ICP",
+                "HOB",
+                "tissue",
+                "cardiac",
+                "neuro"};
 
 
 
         //TODO: rearrange matrix for precedence
+        /*
         int[][] holdMatrix =
                 {       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         {1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
@@ -113,6 +132,30 @@ public class Decomposition {
                         {1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0},
                         {1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0},
                         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1}   };
+                    */
+
+        int[][] holdMatrix =
+                {
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
+                        {1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+                        {1,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0},
+                        {1,1,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0},
+                        {1,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+                        {1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1},
+                };
+
 
 
 
@@ -157,6 +200,43 @@ public class Decomposition {
     }
 
 
+    public void selectTasksWithNumbers(ArrayList<Integer> taskNums){
+
+        String[] names = {
+                "airway",
+                "oxygen",
+                "ECG",
+                "IV",
+                "cardiac",
+                "fluidbolis",
+                "intubate",
+                "breath",
+                "jugular",
+                "pressure",
+                "tissue",
+                "blood",
+                "bleeding",
+                "CPR",
+                "hemo",
+                "ICP",
+                "HOB",
+                "neuro"};
+
+        ArrayList<String> taskNames = new ArrayList<>();
+
+        for(int i=0 ; i<taskNums.size() ; i++){
+            if(taskNums.get(i)==1){
+                taskNames.add(names[i]);
+            }
+        }
+
+        System.out.print("Task names in num: " + taskNames);
+
+        selectTasks(taskNames);
+
+    }
+
+
     public void selectTasks(ArrayList<String> taskNames){
 
         HashMap<String, HashMap<String, Integer>> tempMatrix = (HashMap<String, HashMap<String, Integer>>) matrix.clone();
@@ -184,9 +264,40 @@ public class Decomposition {
             }
         }
 
+        printMatrix(tempMatrix2);
         setMatrix(tempMatrix2);
 
+    }
 
+    public void selectTasks(HashMap<String, Integer> tasks){
+        HashMap<String, HashMap<String, Integer>> tempMatrix = (HashMap<String, HashMap<String, Integer>>) matrix.clone();
+
+        HashMap<String, HashMap<String, Integer>> tempMatrix2 = new HashMap<>();
+        HashMap<String, Integer> tempRow;
+
+
+        //Remove rows of tasks
+        for(String key : tempMatrix.keySet()){
+
+            if(tasks.get(key) == 1){
+
+                tempRow = new HashMap<>();
+
+                //Remove columns of tasks
+                for(String key2 : tempMatrix.get(key).keySet()){
+
+                    if(tasks.get(key2) == 1){
+                        tempRow.put(key2, tempMatrix.get(key).get(key2));
+                    }
+
+                }
+                tempMatrix2.put(key, tempRow);
+            }
+        }
+
+        System.out.println("MAtrix after selectTasks");
+        printMatrix(tempMatrix2);
+        setMatrix(tempMatrix2);
     }
 
     public HashMap<String, HashMap<String, Integer>> removeTasks(ArrayList<String> taskNames){
@@ -221,30 +332,12 @@ public class Decomposition {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void performAlgorithm(){
+    public ArrayList<String> performAlgorithm(){
 
         HashMap<String, HashMap<String, Integer>> tempMatrix = (HashMap<String, HashMap<String, Integer>>) matrix.clone();
+
+        System.out.println("initial matrix");
+        printMatrix(tempMatrix);
 
         int numOfTasks = tempMatrix.keySet().size();
         int rowsFound = 0;
@@ -258,24 +351,23 @@ public class Decomposition {
 
 
             ArrayList<String> emptyRows = determineEmptyRows(tempMatrix);
-            ArrayList<String> emptyCols = determineEmptyColumns(tempMatrix);
 
-            System.out.println(emptyRows);
-            System.out.println(emptyCols);
 
             for (String task : emptyRows) {
                 orderedTasks[rowsFound] = task;
                 rowsFound++;
             }
 
-            for (String task : emptyCols) {
-                orderedTasks[numOfTasks - colsFound - 1] = task;
-                colsFound++;
+            if(emptyRows.isEmpty()) {
+                ArrayList<String> emptyCols = determineEmptyColumns(tempMatrix);
+                for (String task : emptyCols) {
+                    orderedTasks[numOfTasks - colsFound - 1] = task;
+                    colsFound++;
+                }
             }
 
-
             ArrayList<String> tasksAsList = new ArrayList(Arrays.asList(orderedTasks));
-            System.out.println(tasksAsList);
+            System.out.println("Current task list: " + tasksAsList);
 
             tempMatrix = removeTasks(tasksAsList);
             printMatrix(tempMatrix);
@@ -301,14 +393,9 @@ public class Decomposition {
         printMatrix(tempMatrix);
         ArrayList<String> tasksAsList = new ArrayList(Arrays.asList(orderedTasks));
         System.out.println(tasksAsList);
+
+        return tasksAsList;
     }
-
-
-
-
-
-
-
 
     private ArrayList<String> determineEmptyRows(HashMap<String, HashMap<String, Integer>> tempMatrix){
 
