@@ -69,7 +69,7 @@ public class TriageFrame extends JFrame implements ActionListener {
         gridLayout1 = new GridLayout(7,2,2,2);
         inputPanel.setLayout(gridLayout1);
 
-        JLabel hb = new JLabel("HeartBeat: ", SwingConstants.RIGHT);
+        JLabel hb = new JLabel("Heart Rate: ", SwingConstants.RIGHT);
         inputPanel.add(hb);
 
         hbField = new JTextField("");

@@ -212,7 +212,7 @@ public class Patient {
         taskCodes.put("cardiac",  "Get a cardiac consult");
         taskCodes.put("fluidbolis","Give fluid bolis");
         taskCodes.put("intubate", "Lift the chin, provide suction, and intubate");
-        taskCodes.put("breath",   "Assess breath sounds");
+        taskCodes.put("breath",   "Assess breathing");
         taskCodes.put("jugular",  "Assess jugular venous distention");
         taskCodes.put("pressure", "Apply manual pressure");
         taskCodes.put("tissue",   "Assess tissue perfusion");
